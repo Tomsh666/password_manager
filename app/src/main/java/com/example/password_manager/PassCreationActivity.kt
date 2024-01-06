@@ -9,11 +9,14 @@ import android.text.method.PasswordTransformationMethod
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
-import android.widget.RadioButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.password_manager.db.PasswordDbManager
 
 class PassCreationActivity:AppCompatActivity() {
+
+    val passwordDbManager = PasswordDbManager(this)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pass_creation)
@@ -24,6 +27,9 @@ class PassCreationActivity:AppCompatActivity() {
         val CopyButton : Button = findViewById(R.id.copy_button)
         PassEditText.transformationMethod = PasswordTransformationMethod.getInstance()
         SavePassButton.setOnClickListener{
+            passwordDbManager.openDb()
+            savePass()
+            passwordDbManager.closeDb()
             finish()
         }
         CancelButton.setOnClickListener{
@@ -44,5 +50,14 @@ class PassCreationActivity:AppCompatActivity() {
                 PassEditText.transformationMethod = PasswordTransformationMethod.getInstance()
             }
         }
+    }
+
+    fun savePass(){
+        val ResourceEditText: EditText = findViewById(R.id.resource_editText)
+        val LoginEditText: EditText = findViewById(R.id.login_editText)
+        val PassEditText: EditText = findViewById(R.id.password_editText)
+        val NoteEditText: EditText = findViewById(R.id.note_editText)
+        passwordDbManager.insertToDb(ResourceEditText.text.toString(),LoginEditText.text.toString(),
+            PassEditText.text.toString(),NoteEditText.text.toString())
     }
 }
