@@ -5,7 +5,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import android.widget.Button
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,5 +22,16 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, LoginActivity::class.java))
         }
         setContentView(R.layout.activity_main)
+        val PassAddButton : Button = findViewById(R.id.pass_add_button)
+        val PassImportButton : Button = findViewById(R.id.pass_import_button)
+        val PassExportButton : Button = findViewById(R.id.pass_export_button)
+        PassAddButton.setOnClickListener{
+            startActivity(Intent(this, PassCreationActivity::class.java))
+        }
+        PassImportButton.setOnClickListener{
+        }
+        PassExportButton.setOnClickListener{
+
+        }
     }
 }

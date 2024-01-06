@@ -8,14 +8,18 @@
 
     <ListView
         android:id="@+id/pass_table"
-        android:layout_width="329dp"
-        android:layout_height="523dp"
+        android:layout_width="381dp"
+        android:layout_height="599dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.533"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/pass_add"
+        android:id="@+id/pass_add_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -25,17 +29,17 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/pass_import"
+        android:id="@+id/pass_import_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
         android:text="import"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/pass_export"
-        app:layout_constraintStart_toEndOf="@+id/pass_add" />
+        app:layout_constraintEnd_toStartOf="@+id/pass_export_button"
+        app:layout_constraintStart_toEndOf="@+id/pass_add_button" />
 
     <Button
-        android:id="@+id/pass_export"
+        android:id="@+id/pass_export_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
