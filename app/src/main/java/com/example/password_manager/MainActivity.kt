@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity() {
         val PassAddButton : Button = findViewById(R.id.pass_add_button)
         val PassImportButton : Button = findViewById(R.id.pass_import_button)
         val PassExportButton : Button = findViewById(R.id.pass_export_button)
+        val ChangeCodeButton: Button = findViewById(R.id.change_code_button)
         val passTable : ListView = findViewById(R.id.pass_table)
         val dataList = passwordDbManager.readDbData()
         val adapter = ArrayAdapter(this,android.R.layout.simple_list_item_1,dataList)
@@ -42,6 +43,9 @@ class MainActivity : AppCompatActivity() {
         PassImportButton.setOnClickListener{
         }
         PassExportButton.setOnClickListener{
+        }
+        ChangeCodeButton.setOnClickListener{
+            startActivity(Intent(this, ChangeCodeActivivty::class.java))
         }
         passTable.setOnItemClickListener { _, _, position, _ ->
             val intent = Intent(this, PassChangingActivity::class.java)

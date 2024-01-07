@@ -36,7 +36,7 @@ class LoginActivity: AppCompatActivity() {
     private fun showAlertDialog() {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Error")
-            .setMessage("Wrong password")
+            .setMessage("Wrong secret code")
         builder.setPositiveButton("OK") { dialog, which ->
             dialog.dismiss()
         }
