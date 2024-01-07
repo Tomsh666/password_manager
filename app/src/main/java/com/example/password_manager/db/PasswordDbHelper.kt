@@ -1,6 +1,7 @@
 package com.example.password_manager.db
 
 import android.content.Context
+import android.content.ContextWrapper
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import java.io.FileInputStream
