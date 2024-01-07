@@ -7,9 +7,7 @@ import android.database.Cursor
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.BaseColumns
-import android.widget.ArrayAdapter
 import android.widget.Button
-import android.widget.CursorAdapter
 import android.widget.ListView
 import com.example.password_manager.db.PasswordDbClass
 import com.example.password_manager.db.PasswordDbHelper

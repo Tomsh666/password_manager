@@ -3,7 +3,6 @@ package com.example.password_manager.db
 import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
-import android.net.Uri
 import android.provider.BaseColumns
 
 class PasswordDbManager(val context: Context) {
