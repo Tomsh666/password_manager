@@ -1,4 +1,4 @@
-package com.example.password_manager
+package com.example.password_manager.secret_code
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -10,6 +10,7 @@ import android.widget.CheckBox
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.example.password_manager.R
 
 class ChangeCodeActivivty: AppCompatActivity() {
 

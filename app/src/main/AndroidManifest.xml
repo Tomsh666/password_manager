@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name=".secret_code.LoginActivity"
             android:label="activity_login"
             android:parentActivityName=".MainActivity">
             <meta-data
@@ -29,7 +29,7 @@
                 android:value=".MainActivity" />
         </activity>
         <activity
-            android:name=".SignUpActivity"
+            android:name=".secret_code.SignUpActivity"
             android:label="activity_sign_up"
             android:parentActivityName=".MainActivity">
             <meta-data
@@ -53,12 +53,28 @@
                 android:value=".MainActivity" />
         </activity>
         <activity
-            android:name=".ChangeCodeActivivty"
+            android:name=".secret_code.ChangeCodeActivivty"
             android:label="activity_change_secret_code"
             android:parentActivityName=".MainActivity">
         <meta-data
             android:name="android.support.PARENT_ACTIVITY"
             android:value=".MainActivity" />
+        </activity>
+        <activity
+            android:name=".export_import.ImportActivity"
+            android:label="activity_import"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity
+            android:name=".export_import.ExportActivity"
+            android:label="activity_export"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
         </activity>
     </application>
 

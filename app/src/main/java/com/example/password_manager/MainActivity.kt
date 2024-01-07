@@ -9,6 +9,11 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ListView
 import com.example.password_manager.db.PasswordDbManager
+import com.example.password_manager.export_import.ExportActivity
+import com.example.password_manager.export_import.ImportActivity
+import com.example.password_manager.secret_code.ChangeCodeActivivty
+import com.example.password_manager.secret_code.LoginActivity
+import com.example.password_manager.secret_code.SignUpActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -41,8 +46,15 @@ class MainActivity : AppCompatActivity() {
             passwordDbManager.openDb()
         }
         PassImportButton.setOnClickListener{
+            passwordDbManager.closeDb()
+            startActivity(Intent(this, ImportActivity::class.java))
+            passwordDbManager.openDb()
         }
         PassExportButton.setOnClickListener{
+            passwordDbManager.closeDb()
+            startActivity(Intent(this, ExportActivity::class.java))
+            passwordDbManager.openDb()
+
         }
         ChangeCodeButton.setOnClickListener{
             startActivity(Intent(this, ChangeCodeActivivty::class.java))
