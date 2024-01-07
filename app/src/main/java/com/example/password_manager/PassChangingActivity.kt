@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.password_manager.db.PasswordDbManager
 
 class PassChangingActivity:AppCompatActivity(){
-    val passwordDbManager = PasswordDbManager(this)
+    private val passwordDbManager = PasswordDbManager(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,9 +38,8 @@ class PassChangingActivity:AppCompatActivity(){
         }
         DeleteButton.setOnClickListener{
             passwordDbManager.openDb()
-            var position = intent.getIntExtra("position", 25)
-            position++
-            passwordDbManager.deletePassword(position)
+            val id = intent.getIntExtra("id", -1)
+            passwordDbManager.deletePassword(id)
             passwordDbManager.closeDb()
             finish()
         }
@@ -67,9 +66,8 @@ class PassChangingActivity:AppCompatActivity(){
         val LoginEditText: EditText = findViewById(R.id.login_editText)
         val PassEditText: EditText = findViewById(R.id.password_editText)
         val NoteEditText: EditText = findViewById(R.id.note_editText)
-        var position = intent.getIntExtra("position", 25)
-        position++
-        passwordDbManager.updatePassword(position,ResourceEditText.text.toString(),LoginEditText.text.toString(),
+        val id = intent.getIntExtra("id", -1)
+        passwordDbManager.updatePassword(id,ResourceEditText.text.toString(),LoginEditText.text.toString(),
             PassEditText.text.toString(),NoteEditText.text.toString())
         passwordDbManager.closeDb()
     }
@@ -80,9 +78,8 @@ class PassChangingActivity:AppCompatActivity(){
         val LoginEditText: EditText = findViewById(R.id.login_editText)
         val PassEditText: EditText = findViewById(R.id.password_editText)
         val NoteEditText: EditText = findViewById(R.id.note_editText)
-        var position = intent.getIntExtra("position", 25)
-        position++
-        val dataArray: Array<String>? = passwordDbManager.getInfoFromId(position)
+        val id = intent.getIntExtra("id", -1)
+        val dataArray: Array<String>? = passwordDbManager.getInfoFromId(id)
         if (dataArray != null) {
             ResourceEditText.setText(dataArray[0])
             LoginEditText.setText(dataArray[1])

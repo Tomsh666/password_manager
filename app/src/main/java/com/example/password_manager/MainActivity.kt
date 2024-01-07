@@ -3,11 +3,16 @@ package com.example.password_manager
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.database.Cursor
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.BaseColumns
 import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.CursorAdapter
 import android.widget.ListView
+import com.example.password_manager.db.PasswordDbClass
+import com.example.password_manager.db.PasswordDbHelper
 import com.example.password_manager.db.PasswordDbManager
 import com.example.password_manager.export_import.ExportActivity
 import com.example.password_manager.export_import.ImportActivity
@@ -18,7 +23,8 @@ import com.example.password_manager.secret_code.SignUpActivity
 class MainActivity : AppCompatActivity() {
 
     private lateinit var sharedPreferences: SharedPreferences
-    val passwordDbManager = PasswordDbManager(this)
+    private lateinit var adapter: PasswordCursorAdapter
+    private val passwordDbManager = PasswordDbManager(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,8 +43,7 @@ class MainActivity : AppCompatActivity() {
         val PassExportButton : Button = findViewById(R.id.pass_export_button)
         val ChangeCodeButton: Button = findViewById(R.id.change_code_button)
         val passTable : ListView = findViewById(R.id.pass_table)
-        val dataList = passwordDbManager.readDbData()
-        val adapter = ArrayAdapter(this,android.R.layout.simple_list_item_1,dataList)
+        adapter = tableAdapter()
         passTable.adapter = adapter
         PassAddButton.setOnClickListener{
             passwordDbManager.closeDb()
@@ -60,23 +65,50 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, ChangeCodeActivivty::class.java))
         }
         passTable.setOnItemClickListener { _, _, position, _ ->
-            val intent = Intent(this, PassChangingActivity::class.java)
-            intent.putExtra("position", position)
-            startActivity(intent)
+            val cursor = adapter.cursor
+            if (cursor != null && cursor.moveToPosition(position)) {
+                val id = cursor.getInt(cursor.getColumnIndexOrThrow(BaseColumns._ID))
+                val intent = Intent(this, PassChangingActivity::class.java)
+                intent.putExtra("id", id)
+                startActivity(intent)
+            }
         }
     }
 
     override fun onResume() {
         super.onResume()
-        val dataList = passwordDbManager.readDbData()
-        val passTable : ListView = findViewById(R.id.pass_table)
-        val adapter = ArrayAdapter(this,android.R.layout.simple_list_item_1,dataList)
-        passTable.adapter = adapter
-        adapter.notifyDataSetChanged()
+        adapter.changeCursor(getUpdatedCursor())
     }
 
     override fun onDestroy() {
         super.onDestroy()
         passwordDbManager.closeDb()
+    }
+
+    private fun tableAdapter(): PasswordCursorAdapter {
+        val dbHelper = PasswordDbHelper(this)
+        val cursor = dbHelper.readableDatabase.query(
+            PasswordDbClass.TABLE_NAME,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+        )
+        return PasswordCursorAdapter(this, cursor)
+    }
+
+    private fun getUpdatedCursor(): Cursor {
+        val dbHelper = PasswordDbHelper(this)
+        return dbHelper.readableDatabase.query(
+            PasswordDbClass.TABLE_NAME,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+        )
     }
 }
