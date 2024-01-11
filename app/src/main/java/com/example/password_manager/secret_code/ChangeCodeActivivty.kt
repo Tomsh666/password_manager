@@ -11,10 +11,11 @@ import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.password_manager.R
+import com.example.password_manager.db.PasswordDbManager
 
 class ChangeCodeActivivty: AppCompatActivity() {
-
-    private lateinit var sharedPreferences: SharedPreferences
+    private val fileHelper = FileHelper(this)
+    private val passwordDbManager = PasswordDbManager(this)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_change_secret_code)
@@ -23,7 +24,6 @@ class ChangeCodeActivivty: AppCompatActivity() {
         val showCodeCheckBox: CheckBox = findViewById(R.id.show_code_checkBox)
         val oldCodeEditText: EditText = findViewById(R.id.old_code_editText)
         val newCodeEditText: EditText = findViewById(R.id.new_code_editText)
-        sharedPreferences = getSharedPreferences("password_manager", Context.MODE_PRIVATE)
         oldCodeEditText.transformationMethod = PasswordTransformationMethod.getInstance()
         newCodeEditText.transformationMethod = PasswordTransformationMethod.getInstance()
         saveButton.setOnClickListener{
@@ -48,11 +48,15 @@ class ChangeCodeActivivty: AppCompatActivity() {
         val newCodeEditText: EditText = findViewById(R.id.new_code_editText)
         val oldCode = oldCodeEditText.text.toString()
         val newCode = newCodeEditText.text.toString()
-        val codeValue = sharedPreferences.getString("code", "")
+        val codeValue = fileHelper.readFromExternalFile()
         if (oldCode == codeValue){
-            val editor = sharedPreferences.edit()
-            editor.putString("code", newCode)
-            editor.apply()
+            passwordDbManager.decryptWholeTable()
+            MyApp.secretKey = newCode
+            fileHelper.savePasswordToFile(newCode)
+            while (MyApp.secretKey.length < 16) {
+                MyApp.secretKey += '0'
+            }
+            passwordDbManager.encryptWholeTable()
             finish()
         }
         else{

@@ -8,23 +8,27 @@ import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.password_manager.R
+import java.io.BufferedReader
+import java.io.File
+import java.io.FileInputStream
+import java.io.InputStreamReader
 
 class LoginActivity: AppCompatActivity() {
-
-    private lateinit var sharedPreferences: SharedPreferences
+    private val fileHelper = FileHelper(this)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        sharedPreferences = getSharedPreferences("password_manager",Context.MODE_PRIVATE)
+        val codeValue = fileHelper.readFromExternalFile()
         val button: Button = findViewById(R.id.login_button)
         val editTextCode: EditText = findViewById(R.id.pass_text)
         button.setOnClickListener{
             val enteredCode = editTextCode.text.toString()
-            val codeValue = sharedPreferences.getString("code", "")
             if (enteredCode == codeValue){
-//                val editor = sharedPreferences.edit()
-//                editor.clear()
-//                editor.apply()
+                MyApp.secretKey = codeValue
+                while (MyApp.secretKey.length < 16) {
+                    MyApp.secretKey += "0"
+                }
+                MyApp.isInitialized = true
                 finish()
             }
             else{

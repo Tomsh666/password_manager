@@ -8,9 +8,11 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.password_manager.R
 import com.example.password_manager.db.PasswordDbHelper
+import com.example.password_manager.db.PasswordDbManager
 import java.io.File
 
 class ImportActivity:AppCompatActivity() {
+    private val passwordDbManager = PasswordDbManager(this)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_import)
@@ -24,6 +26,7 @@ class ImportActivity:AppCompatActivity() {
             val fulPath = path + dbName + ".db"
             if (isFileExist(fulPath)){
                 dbHelper.importDataBase(this,fulPath)
+                passwordDbManager.encryptWholeTable()
                 finish()
             }
             else{

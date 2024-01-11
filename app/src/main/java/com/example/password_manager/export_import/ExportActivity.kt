@@ -7,8 +7,10 @@ import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.example.password_manager.R
 import com.example.password_manager.db.PasswordDbHelper
+import com.example.password_manager.db.PasswordDbManager
 
 class ExportActivity:AppCompatActivity() {
+    private val passwordDbManager = PasswordDbManager(this)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_export)
@@ -20,7 +22,9 @@ class ExportActivity:AppCompatActivity() {
             val dbHelper = PasswordDbHelper(this)
             val path = "${ContextWrapper(this).filesDir.parent}/databases/"
             val fulPath = path + dbName + ".db"
+            passwordDbManager.decryptWholeTable()
             dbHelper.exportDataBase(this,fulPath)
+            passwordDbManager.encryptWholeTable()
             finish()
 
         }

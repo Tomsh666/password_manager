@@ -1,15 +1,11 @@
 package com.example.password_manager
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.database.Cursor
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.BaseColumns
-import android.widget.ArrayAdapter
 import android.widget.Button
-import android.widget.CursorAdapter
 import android.widget.ListView
 import com.example.password_manager.db.PasswordDbClass
 import com.example.password_manager.db.PasswordDbHelper
@@ -17,21 +13,22 @@ import com.example.password_manager.db.PasswordDbManager
 import com.example.password_manager.export_import.ExportActivity
 import com.example.password_manager.export_import.ImportActivity
 import com.example.password_manager.secret_code.ChangeCodeActivivty
+import com.example.password_manager.secret_code.FileHelper
 import com.example.password_manager.secret_code.LoginActivity
+import com.example.password_manager.secret_code.MyApp
 import com.example.password_manager.secret_code.SignUpActivity
+
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var sharedPreferences: SharedPreferences
     private lateinit var adapter: PasswordCursorAdapter
     private val passwordDbManager = PasswordDbManager(this)
+    private val fileHelper = FileHelper(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         passwordDbManager.openDb()
-        sharedPreferences = getSharedPreferences("password_manager",Context.MODE_PRIVATE)
-        val isCodeSet = sharedPreferences.getBoolean("isCodeSet", false)
-        if (!isCodeSet) {
+        if (fileHelper.isFileEmpty()) {
             startActivity(Intent(this, SignUpActivity::class.java))
         }
         else{

@@ -9,7 +9,7 @@ object PasswordDbClass {
     const val COLUMN_PASS = "pass"
     const val COLUMN_NOTE = "note"
 
-    const val DATABASE_VERSION = 3
+    const val DATABASE_VERSION = 5
     const val DATABASE_NAME = "password_manager.db"
 
     const val CREATE_TABLE = "CREATE TABLE IF NOT EXISTS $TABLE_NAME (" +
